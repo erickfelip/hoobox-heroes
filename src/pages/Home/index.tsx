@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
 import { api, fetchHeroes } from "../../services/api";
 import {
   Container,
@@ -12,8 +12,9 @@ import {
   Photo,
 } from "./styles";
 import { Button } from "../../components/Button";
+import { SearchInput } from "../../components/SearchInput";
 
-export interface HeroesData {
+export type HeroesData = {
   id: string;
   name: string;
   description: string;
@@ -21,10 +22,12 @@ export interface HeroesData {
     extension: string;
     path: string;
   };
-}
+};
 
 export const Home = () => {
   const [heroes, setHeroes] = useState<HeroesData[]>([]);
+  const [filteredHeroes, setFilteredHeroes] = useState(heroes);
+  const [searchField, setSearchField] = useState("");
 
   async function dataHeroes() {
     const dataSolicitaion = await fetchHeroes();
@@ -47,25 +50,53 @@ export const Home = () => {
     dataHeroes();
   }, []);
 
+  useEffect(() => {
+    const filteredHeroes = heroes.filter((character) => {
+      return character.name.toLocaleLowerCase().includes(searchField);
+    });
+
+    setFilteredHeroes(filteredHeroes);
+  }, [heroes, searchField]);
+
+  const onSearchChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const searchFieldString = event.target.value.toLocaleLowerCase();
+    console.log("@@@#@#", searchFieldString);
+    setSearchField(searchFieldString);
+  };
+
   return (
     <Container>
       <Wrapper>
-        <MapHeroes>
-          {heroes.map((character) => {
-            return (
-              <Card key={character.id}>
-                <Photo
-                  src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
-                  alt={`Heroe image${character.name}`}
-                />
-                <CardContent>
-                  <Name>{character.name}</Name>
-                  <Description>{character.description}</Description>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </MapHeroes>
+        <SearchInput
+          placeholder="Search Heroes..."
+          onChangeHandler={onSearchChange}
+        />
+        {filteredHeroes.length > 0 ? (
+          <MapHeroes>
+            {filteredHeroes.map((character) => {
+              return (
+                <Card key={character.id}>
+                  <Photo
+                    src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
+                    alt={`Heroe image${character.name}`}
+                  />
+                  <CardContent>
+                    <Name>{character.name}</Name>
+                    <Description>
+                      {character.description === ""
+                        ? "Personagem não possui descrição"
+                        : character.description}
+                    </Description>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </MapHeroes>
+        ) : (
+          <>
+            {filteredHeroes.length === 0 && <p>Personagem não encontrado :(</p>}
+          </>
+        )}
       </Wrapper>
       <ButtonWrapper>
         <Button text="More Heroes" onClick={handleMoreHeroes} />

@@ -15,7 +15,7 @@ export const api = axios.create({
 
 export async function fetchHeroes() {
   try {
-    const response = await api.get("/characters?limit=100");
+    const response = await api.get("/characters");
     console.log("Resposta da API", response.data.data.results);
     return response.data.data.results;
   } catch (error) {}

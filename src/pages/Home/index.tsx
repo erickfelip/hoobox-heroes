@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { fetchHeroes } from "../../services/api";
+import React, { useState, useEffect, useCallback } from "react";
+import { api, fetchHeroes } from "../../services/api";
 import {
   Container,
   Wrapper,
   MapHeroes,
   Card,
-  Photo,
   CardContent,
   Description,
   Name,
+  ButtonWrapper,
+  Photo,
 } from "./styles";
+import { Button } from "../../components/Button";
 
-interface HeroesData {
+export interface HeroesData {
   id: string;
   name: string;
   description: string;
@@ -27,8 +29,19 @@ export const Home = () => {
   async function dataHeroes() {
     const dataSolicitaion = await fetchHeroes();
     setHeroes(dataSolicitaion);
-    console.log("Ta vindo oq DA API", dataSolicitaion);
   }
+
+  const handleMoreHeroes = useCallback(async () => {
+    try {
+      const offset = heroes.length;
+      const response = await api.get("characters", {
+        params: {
+          offset,
+        },
+      });
+      setHeroes([...heroes, ...response.data.data.results]);
+    } catch (error) {}
+  }, [heroes]);
 
   useEffect(() => {
     dataHeroes();
@@ -54,6 +67,9 @@ export const Home = () => {
           })}
         </MapHeroes>
       </Wrapper>
+      <ButtonWrapper>
+        <Button text="More Heroes" onClick={handleMoreHeroes} />
+      </ButtonWrapper>
     </Container>
   );
 };

@@ -13,9 +13,17 @@ export const api = axios.create({
   },
 });
 
-export async function fetchHeroes() {
+export async function fetchHeroes(searchField: string) {
+  const params = searchField
+    ? {
+        params: {
+          nameStartsWith: searchField,
+        },
+      }
+    : {};
+
   try {
-    const response = await api.get("/characters");
+    const response = await api.get("/characters", params);
     console.log("Resposta da API", response.data.data.results);
     return response.data.data.results;
   } catch (error) {}

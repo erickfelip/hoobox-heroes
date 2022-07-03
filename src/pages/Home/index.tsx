@@ -1,18 +1,9 @@
 import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
 import { api, fetchHeroes } from "../../services/api";
-import {
-  Container,
-  Wrapper,
-  MapHeroes,
-  Card,
-  CardContent,
-  Description,
-  Name,
-  ButtonWrapper,
-  Photo,
-} from "./styles";
+import { Container, Wrapper, MapHeroes, ButtonWrapper } from "./styles";
 import { Button } from "../../components/Button";
 import { SearchInput } from "../../components/SearchInput";
+import { CardHero } from "../../components/Card";
 
 export type HeroesData = {
   id: string;
@@ -26,13 +17,24 @@ export type HeroesData = {
 
 export const Home = () => {
   const [heroes, setHeroes] = useState<HeroesData[]>([]);
-  const [filteredHeroes, setFilteredHeroes] = useState(heroes);
   const [searchField, setSearchField] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  async function dataHeroes() {
-    const dataSolicitaion = await fetchHeroes();
+  useEffect(() => {
+    dataHeroes();
+  }, [searchField]);
+
+  const dataHeroes = async () => {
+    setLoading(true);
+    const dataSolicitaion = await fetchHeroes(searchField);
     setHeroes(dataSolicitaion);
-  }
+    setLoading(false);
+  };
+
+  const handleSearch = (string: { target: { value: string } }) => {
+    const { value } = string.target;
+    setSearchField(value);
+  };
 
   const handleMoreHeroes = useCallback(async () => {
     try {
@@ -46,61 +48,33 @@ export const Home = () => {
     } catch (error) {}
   }, [heroes]);
 
-  useEffect(() => {
-    dataHeroes();
-  }, []);
-
-  useEffect(() => {
-    const filteredHeroes = heroes.filter((character) => {
-      return character.name.toLocaleLowerCase().includes(searchField);
-    });
-
-    setFilteredHeroes(filteredHeroes);
-  }, [heroes, searchField]);
-
-  const onSearchChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    const searchFieldString = event.target.value.toLocaleLowerCase();
-    console.log("@@@#@#", searchFieldString);
-    setSearchField(searchFieldString);
-  };
-
   return (
     <Container>
       <Wrapper>
         <SearchInput
           placeholder="Search Heroes..."
-          onChangeHandler={onSearchChange}
+          onChangeHandler={handleSearch}
+          value={searchField}
         />
-        {filteredHeroes.length > 0 ? (
+        {heroes && heroes.length > 0 ? (
           <MapHeroes>
-            {filteredHeroes.map((character) => {
-              return (
-                <Card key={character.id}>
-                  <Photo
-                    src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
-                    alt={`Heroe image${character.name}`}
-                  />
-                  <CardContent>
-                    <Name>{character.name}</Name>
-                    <Description>
-                      {character.description === ""
-                        ? "Personagem não possui descrição"
-                        : character.description}
-                    </Description>
-                  </CardContent>
-                </Card>
-              );
+            {heroes.map((character) => {
+              return <CardHero character={character} key={character.id} />;
             })}
           </MapHeroes>
         ) : (
           <>
-            {filteredHeroes.length === 0 && <p>Personagem não encontrado :(</p>}
+            {heroes && heroes.length === 0 && (
+              <p>Personagem não encontrado :( </p>
+            )}
           </>
         )}
       </Wrapper>
-      <ButtonWrapper>
-        <Button text="More Heroes" onClick={handleMoreHeroes} />
-      </ButtonWrapper>
+      {!searchField && (
+        <ButtonWrapper>
+          <Button text="More Heroes" onClick={handleMoreHeroes} />
+        </ButtonWrapper>
+      )}
     </Container>
   );
 };

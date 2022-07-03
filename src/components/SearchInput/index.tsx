@@ -5,6 +5,7 @@ interface ISearchInput {
   onChangeHandler?: ChangeEventHandler<HTMLInputElement>;
   className?: string;
   placeholder?: string;
+  value?: string;
 }
 
 export const SearchInput = ({

@@ -26,5 +26,35 @@ export async function fetchHeroes(searchField: string) {
     const response = await api.get("/characters", params);
     console.log("Resposta da API", response.data.data.results);
     return response.data.data.results;
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getHero(id: string) {
+  try {
+    const response = await api.get(`/characters/${id}`);
+    console.log("Resposta da API", response.data.data.results);
+    return response.data.data.results;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function fetchComics(searchField: string) {
+  const params = searchField
+    ? {
+        params: {
+          titleStartsWith: searchField,
+        },
+      }
+    : {};
+
+  try {
+    const response = await api.get("/comics", params);
+    console.log("Quadrinhos", response.data.data.results);
+    return response.data.data.results;
+  } catch (error) {
+    console.log(error);
+  }
 }

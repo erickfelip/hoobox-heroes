@@ -4,7 +4,7 @@ export const MoreHeroes = styled.button`
   background-color: red;
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 15px 15px;
   font-size: 16px;
   transition-duration: 0.4s;
   cursor: pointer;

@@ -1,9 +1,17 @@
-import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { api, fetchHeroes } from "../../services/api";
-import { Container, Wrapper, MapHeroes, ButtonWrapper } from "./styles";
+import {
+  Container,
+  Wrapper,
+  MapHeroes,
+  ButtonWrapper,
+  Menu,
+  ButtonWrapperMenu,
+} from "./styles";
 import { Button } from "../../components/Button";
 import { SearchInput } from "../../components/SearchInput";
 import { CardHero } from "../../components/Card";
+import { useNavigate } from "react-router-dom";
 
 export type HeroesData = {
   id: string;
@@ -13,12 +21,16 @@ export type HeroesData = {
     extension: string;
     path: string;
   };
+  comics: {
+    available: string;
+  };
 };
 
 export const Home = () => {
   const [heroes, setHeroes] = useState<HeroesData[]>([]);
   const [searchField, setSearchField] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dataHeroes();
@@ -48,14 +60,23 @@ export const Home = () => {
     } catch (error) {}
   }, [heroes]);
 
+  const handleComics = () => {
+    navigate("/comics");
+  };
+
   return (
     <Container>
-      <Wrapper>
+      <Menu>
         <SearchInput
           placeholder="Search Heroes..."
           onChangeHandler={handleSearch}
           value={searchField}
         />
+        <ButtonWrapperMenu>
+          <Button text="Comics" onClick={handleComics} />
+        </ButtonWrapperMenu>
+      </Menu>
+      <Wrapper>
         {heroes && heroes.length > 0 ? (
           <MapHeroes>
             {heroes.map((character) => {

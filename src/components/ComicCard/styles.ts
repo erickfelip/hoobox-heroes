@@ -1,25 +1,5 @@
 import styled from "styled-components";
 
-export const Container = styled.main`
-  min-height: 100vh;
-  background: #eee;
-  padding: 20px;
-`;
-
-export const Menu = styled.main`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const Wrapper = styled.h1``;
-
-export const MapHeroes = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-`;
-
 export const Card = styled.div`
   background: white;
   border-radius: 10px;
@@ -51,16 +31,5 @@ export const Name = styled.div`
 
 export const Description = styled.div`
   font-weight: lighter;
-`;
 
-export const ButtonWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 20px;
-  height: 70px;
-`;
-
-export const ButtonWrapperMenu = styled.div`
-  padding-right: 20px;
 `;

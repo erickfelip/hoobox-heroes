@@ -31,6 +31,22 @@ export type ComicsData = {
       }
     ];
   };
+  urls: [
+    {
+      type: string;
+      url: string;
+    }
+  ];
+  series: {
+    name: string;
+  };
+  characters: {
+    items: [
+      {
+        name: string;
+      }
+    ];
+  };
 };
 
 export const Comics = () => {
@@ -86,8 +102,8 @@ export const Comics = () => {
       <Wrapper>
         {comics && comics.length > 0 ? (
           <MapHeroes>
-            {comics.map((character) => {
-              return <ComicCard character={character} key={character.id} />;
+            {comics.map((comics) => {
+              return <ComicCard comics={comics} key={comics.id} />;
             })}
           </MapHeroes>
         ) : (

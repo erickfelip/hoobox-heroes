@@ -1,27 +1,34 @@
 import React from "react";
 import { ComicsData } from "../../pages/Comics";
 import { Card, Photo, CardContent, Name, Description } from "./styles";
+import { Link } from "react-router-dom";
 
 export type CardHeroProps = {
-  character: ComicsData;
+  comics: ComicsData;
 };
 
 export const ComicCard = (props: CardHeroProps) => {
-  const { character } = props;
+  const { comics } = props;
   return (
-    <Card key={character.id}>
-      <Photo
-        src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
-        alt={`Hero image${character.title}`}
-      />
-      <CardContent>
-        <Name>{character.title}</Name>
-        <Description>
-          {character.description === ""
-            ? "Quadrinho não possui descrição"
-            : character.description}
-        </Description>
-      </CardContent>
+    <Card key={comics.id}>
+      <Link
+        to={`/comicsdetail/${comics.id}`}
+        state={comics}
+        style={{ textDecoration: "none", color: "black" }}
+      >
+        <Photo
+          src={`${comics.thumbnail.path}.${comics.thumbnail.extension}`}
+          alt={`Comic-image${comics.title}`}
+        />
+        <CardContent>
+          <Name>{comics.title}</Name>
+          <Description>
+            {comics.description === "" || null
+              ? "Quadrinho não possui descrição"
+              : comics.description}
+          </Description>
+        </CardContent>
+      </Link>
     </Card>
   );
 };

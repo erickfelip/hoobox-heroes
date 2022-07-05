@@ -41,6 +41,16 @@ export async function getHero(id: string) {
   }
 }
 
+export async function getComics(id: string) {
+  try {
+    const response = await api.get(`/comics/${id}`);
+    console.log("Resposta da Comics", response.data.data.results);
+    return response.data.data.results;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function fetchComics(searchField: string) {
   const params = searchField
     ? {

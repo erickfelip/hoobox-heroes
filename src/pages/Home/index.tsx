@@ -23,7 +23,25 @@ export type HeroesData = {
   };
   comics: {
     available: string;
+    items: [
+      {
+        name: string;
+      }
+    ];
   };
+  events: {
+    items: [
+      {
+        name: string;
+      }
+    ];
+  };
+  urls: [
+    {
+      type: string;
+      url: string;
+    }
+  ];
 };
 
 export const Home = () => {

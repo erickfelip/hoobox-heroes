@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  Container,
   Wrapper,
   Photo,
   Info,
@@ -15,6 +14,7 @@ import {
 import { useParams } from "react-router-dom";
 import { getHero } from "../../services/api";
 import { HeroesData } from "../Home";
+import { Rating } from "react-simple-star-rating";
 
 interface Params {
   id: string;
@@ -23,6 +23,8 @@ interface Params {
 export const HeroDetail = () => {
   const { id } = useParams<keyof Params>() as Params;
   const [loading, setLoading] = useState(false);
+  const [ratingValue, setRatingValue] = useState(0);
+
   const [hero, setHero] = useState<HeroesData>({
     id: "",
     name: "",
@@ -33,43 +35,83 @@ export const HeroDetail = () => {
     },
     comics: {
       available: "",
+      items: [
+        {
+          name: "",
+        },
+      ],
     },
+    events: {
+      items: [
+        {
+          name: "",
+        },
+      ],
+    },
+    urls: [
+      {
+        type: "",
+        url: "",
+      },
+    ],
   });
 
-  const dataHeroes = async () => {
-    setLoading(true);
-    const dataSolicitaion = await getHero(id);
-    console.log("!!!", dataSolicitaion);
-    setHero(dataSolicitaion[0]);
-    setLoading(false);
-  };
+  useEffect(() => {
+    const rating = localStorage.getItem(id);
+    setRatingValue(Number(rating) || 0);
+  }, []);
 
   useEffect(() => {
     dataHeroes();
   }, [id]);
 
+  const dataHeroes = async () => {
+    setLoading(true);
+    const dataSolicitaion = await getHero(id);
+    setHero(dataSolicitaion[0]);
+    setLoading(false);
+  };
+
+  const handleRating = (rate: number) => {
+    localStorage.setItem(id, String(rate));
+  };
+
   return (
-    <Container>
-      <Wrapper>
-        <Info>
-          <Photo
-            src={`${hero.thumbnail.path}.${hero.thumbnail.extension}`}
-            alt={`Heroe image${hero.name}`}
-          />
-          <RatingStatus />
-          <Name>{hero.name}</Name>
-          <Name>{hero.comics.available}</Name>
-          <MoreInfo>
-            <Links>WIKI</Links>
-            <Links>COMIC</Links>
-            <Links>DETAIL</Links>
-          </MoreInfo>
-        </Info>
-        <WrapperDetailsHero>
-          <Events> Eventos </Events>
-          <Comics> Quadrinhos </Comics>
-        </WrapperDetailsHero>
-      </Wrapper>
-    </Container>
+    <Wrapper>
+      <Info>
+        <Photo
+          src={`${hero.thumbnail.path}.${hero.thumbnail.extension}`}
+          alt={`Hero image${hero.name}`}
+        />
+        <RatingStatus>
+          <Rating ratingValue={ratingValue} onClick={handleRating} />
+        </RatingStatus>
+        <Name>{hero.name}</Name>
+        <Name>{hero.comics.available}</Name>
+        <MoreInfo>
+          {hero.urls.map((url) => (
+            <>
+              <Links href={url.url} target="_blank">
+                {url.type}
+              </Links>
+            </>
+          ))}
+        </MoreInfo>
+      </Info>
+      <WrapperDetailsHero>
+        <Events>
+          {`Eventos:`}
+          {hero.events.items.map((item) => (
+            <div>{item?.name}</div>
+          ))}
+        </Events>
+        <Comics>
+          {`Quadrinhos:`}
+          {hero.comics.items.map((item) => (
+            <div>{item?.name}</div>
+          ))}
+        </Comics>
+      </WrapperDetailsHero>
+    </Wrapper>
   );
 };

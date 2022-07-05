@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  background-color: #eee;
   @media screen and (max-width: 1023px) {
     flex-direction: column;
   }
@@ -13,23 +14,63 @@ export const Wrapper = styled.div`
   gap: 2.5rem;
 `;
 
+export const HeroDetailsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 85%;
+  border-radius: 20px;
+  padding: 10px;
+  @media screen and (max-width: 1023px) {
+    flex-direction: column;
+    width: 100%;
+  }
+`;
+
+export const GoBack = styled.div`
+  color: black;
+  height: 557px;
+
+  @media screen and (max-width: 1023px) {
+    width: 100%;
+    height: 2rem;
+    padding-right: 20rem;
+  }
+`;
+
 export const Photo = styled.img.attrs({
   width: 355,
   height: 355,
 })`
   max-width: 100%;
+  border-radius: 10px;
 `;
 
 export const Info = styled.div`
   padding: 20px;
   font-size: 16px;
-  background-color: grey;
   width: 100%;
+
+  @media screen and (max-width: 1023px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
 `;
 
 export const RatingStatus = styled.div`
   width: 70px;
   height: 70px;
+  padding-top: 10px;
+
+  @media screen and (max-width: 1023px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 export const Name = styled.div`
@@ -70,7 +111,8 @@ export const MoreInfo = styled.div`
 
 export const Events = styled.div`
   font-size: 16px;
-  background-color: salmon;
+  background-color: #eee;
+  border-radius: 10px;
   overflow: auto;
   padding: 20px;
   height: 50%;
@@ -78,7 +120,8 @@ export const Events = styled.div`
 `;
 export const Comics = styled.div`
   font-size: 16px;
-  background-color: yellowgreen;
+  background-color: #eee;
+  border-radius: 10px;
   overflow: auto;
   padding: 20px;
   height: 50%;
@@ -92,4 +135,5 @@ export const WrapperDetailsHero = styled.div`
   align-items: center;
   width: 100%;
   height: 35rem;
+  gap: 1.25rem;
 `;

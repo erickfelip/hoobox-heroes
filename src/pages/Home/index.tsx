@@ -7,11 +7,13 @@ import {
   ButtonWrapper,
   Menu,
   ButtonWrapperMenu,
+  WrapperLoading,
 } from "./styles";
 import { Button } from "../../components/Button";
 import { SearchInput } from "../../components/SearchInput";
 import { CardHero } from "../../components/Card";
 import { useNavigate } from "react-router-dom";
+import RotateLoader from "react-spinners/ClipLoader";
 
 export type HeroesData = {
   id: string;
@@ -79,7 +81,9 @@ export const Home = () => {
   }, [heroes]);
 
   const handleComics = () => {
+    setLoading(true);
     navigate("/comics");
+    setLoading(false);
   };
 
   return (
@@ -94,25 +98,33 @@ export const Home = () => {
           <Button text="Comics" onClick={handleComics} />
         </ButtonWrapperMenu>
       </Menu>
-      <Wrapper>
-        {heroes && heroes.length > 0 ? (
-          <MapHeroes>
-            {heroes.map((character) => {
-              return <CardHero character={character} key={character.id} />;
-            })}
-          </MapHeroes>
-        ) : (
-          <>
-            {heroes && heroes.length === 0 && (
-              <p>Personagem não encontrado :( </p>
+      {loading ? (
+        <WrapperLoading>
+          <RotateLoader size={100} />
+        </WrapperLoading>
+      ) : (
+        <>
+          <Wrapper>
+            {heroes && heroes.length > 0 ? (
+              <MapHeroes>
+                {heroes.map((character) => {
+                  return <CardHero character={character} key={character.id} />;
+                })}
+              </MapHeroes>
+            ) : (
+              <>
+                {heroes && heroes.length === 0 && (
+                  <p>Personagem não encontrado :( </p>
+                )}
+              </>
             )}
-          </>
-        )}
-      </Wrapper>
-      {!searchField && (
-        <ButtonWrapper>
-          <Button text="More Heroes" onClick={handleMoreHeroes} />
-        </ButtonWrapper>
+          </Wrapper>
+          {!searchField && (
+            <ButtonWrapper>
+              <Button text="More Heroes" onClick={handleMoreHeroes} />
+            </ButtonWrapper>
+          )}
+        </>
       )}
     </Container>
   );

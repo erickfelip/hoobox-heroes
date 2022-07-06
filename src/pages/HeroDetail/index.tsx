@@ -18,6 +18,7 @@ import { getHero } from "../../services/api";
 import { HeroesData } from "../Home";
 import { Rating } from "react-simple-star-rating";
 import { BiArrowBack } from "react-icons/bi";
+import RingLoader from "react-spinners/ClipLoader";
 
 interface Params {
   id: string;
@@ -82,45 +83,47 @@ export const HeroDetail = () => {
 
   return (
     <Wrapper>
-      <HeroDetailsContainer>
-        <GoBack>
-          <BiArrowBack onClick={() => navigate(-1)} size={30} />
-        </GoBack>
-        <Info>
-          <Photo
-            src={`${hero.thumbnail.path}.${hero.thumbnail.extension}`}
-            alt={`Hero image${hero.name}`}
-          />
-          <RatingStatus>
-            <Rating ratingValue={ratingValue} onClick={handleRating} />
-          </RatingStatus>
-          <Name>{hero.name}</Name>
-          <Name>{hero.comics.available}</Name>
-          <MoreInfo>
-            {hero.urls.map((url) => (
-              <>
+      {loading ? (
+        <RingLoader size={100} />
+      ) : (
+        <HeroDetailsContainer>
+          <GoBack>
+            <BiArrowBack onClick={() => navigate(-1)} size={30} />
+          </GoBack>
+          <Info>
+            <Photo
+              src={`${hero.thumbnail.path}.${hero.thumbnail.extension}`}
+              alt={`Hero image${hero.name}`}
+            />
+            <RatingStatus>
+              <Rating ratingValue={ratingValue} onClick={handleRating} />
+            </RatingStatus>
+            <Name>{hero.name}</Name>
+            <Name>{hero.comics.available}</Name>
+            <MoreInfo>
+              {hero.urls.map((url) => (
                 <Links href={url.url} target="_blank">
                   {url.type}
                 </Links>
-              </>
-            ))}
-          </MoreInfo>
-        </Info>
-        <WrapperDetailsHero>
-          <Events>
-            {`Eventos:`}
-            {hero.events.items.map((item) => (
-              <div>{item?.name}</div>
-            ))}
-          </Events>
-          <Comics>
-            {`Quadrinhos:`}
-            {hero.comics.items.map((item) => (
-              <div>{item?.name}</div>
-            ))}
-          </Comics>
-        </WrapperDetailsHero>
-      </HeroDetailsContainer>
+              ))}
+            </MoreInfo>
+          </Info>
+          <WrapperDetailsHero>
+            <Events>
+              {`Eventos:`}
+              {hero.events.items.map((item) => (
+                <div>{item?.name}</div>
+              ))}
+            </Events>
+            <Comics>
+              {`Quadrinhos:`}
+              {hero.comics.items.map((item) => (
+                <div>{item?.name}</div>
+              ))}
+            </Comics>
+          </WrapperDetailsHero>
+        </HeroDetailsContainer>
+      )}
     </Wrapper>
   );
 };

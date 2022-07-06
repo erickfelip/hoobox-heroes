@@ -8,10 +8,12 @@ import {
   ButtonWrapper,
   Menu,
   ButtonWrapperMenu,
+  WrapperLoading,
 } from "./styles";
 import { ComicCard } from "../../components/ComicCard";
 import { api, fetchComics } from "../../services/api";
 import { useNavigate } from "react-router-dom";
+import RotateLoader from "react-spinners/ClipLoader";
 
 export type ComicsData = {
   id: string;
@@ -84,7 +86,9 @@ export const Comics = () => {
   }, [comics]);
 
   const handleHeroes = () => {
+    setLoading(true);
     navigate("/");
+    setLoading(false);
   };
 
   return (
@@ -99,25 +103,33 @@ export const Comics = () => {
           <Button text="Heroes" onClick={handleHeroes} />
         </ButtonWrapperMenu>
       </Menu>
-      <Wrapper>
-        {comics && comics.length > 0 ? (
-          <MapHeroes>
-            {comics.map((comics) => {
-              return <ComicCard comics={comics} key={comics.id} />;
-            })}
-          </MapHeroes>
-        ) : (
-          <>
-            {comics && comics.length === 0 && (
-              <p>Quadrinho não encontrado :( </p>
+      {loading ? (
+        <WrapperLoading>
+          <RotateLoader size={100} />
+        </WrapperLoading>
+      ) : (
+        <>
+          <Wrapper>
+            {comics && comics.length > 0 ? (
+              <MapHeroes>
+                {comics.map((comics, index) => {
+                  return <ComicCard comics={comics} key={index} />;
+                })}
+              </MapHeroes>
+            ) : (
+              <>
+                {comics && comics.length === 0 && (
+                  <p>Quadrinho não encontrado :( </p>
+                )}
+              </>
             )}
-          </>
-        )}
-      </Wrapper>
-      {!searchField && (
-        <ButtonWrapper>
-          <Button text="More Comics" onClick={handleMoreComics} />
-        </ButtonWrapper>
+          </Wrapper>
+          {!searchField && (
+            <ButtonWrapper>
+              <Button text="More Comics" onClick={handleMoreComics} />
+            </ButtonWrapper>
+          )}
+        </>
       )}
     </Container>
   );

@@ -4,6 +4,14 @@ export const Container = styled.main`
   min-height: 100vh;
   background: #eee;
   padding: 20px;
+  align-items: center;
+`;
+
+export const WrapperLoading = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 `;
 
 export const Menu = styled.main`

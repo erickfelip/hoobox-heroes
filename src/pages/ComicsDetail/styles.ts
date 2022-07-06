@@ -10,6 +10,7 @@ export const Wrapper = styled.div`
     flex-direction: column;
   }
   width: 100%;
+  min-height: 100vh;
   padding: 5%;
   gap: 2.5rem;
 `;
@@ -42,8 +43,8 @@ export const GoBack = styled.div`
 `;
 
 export const Photo = styled.img.attrs({
-  width: 355,
-  height: 355,
+  width: 375,
+  height: 367,
 })`
   max-width: 100%;
   border-radius: 10px;
@@ -141,26 +142,16 @@ export const WrapperDetailsHero = styled.div`
 
 export const Creators = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  /*   gap: 1rem; */
   flex-direction: row;
   gap: 1rem;
   padding-bottom: 10px;
 
-  @media screen and (max-width: 575px) {
+  @media screen and (max-width: 363px) {
     display: flex;
-    /*   flex-direction: column; */
+    flex-direction: column;
     gap: 1rem;
     padding-bottom: 10px;
   }
 `;
 
-export const Creator = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  /*   align-items: center; */
-  /*  width: 100%; */
-  /*  gap: 1.25rem; */
-`;
+export const Creator = styled.div``;

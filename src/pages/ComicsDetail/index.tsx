@@ -107,17 +107,15 @@ export const ComicsDetail = () => {
             <Name>{comics.title}</Name>
             <Creators>
               {`Criador: `}
-              {comics.creators.items.slice(0, 3).map((item) => (
-                <Creator>{item?.name}</Creator>
+              {comics.creators.items.slice(0, 3).map((item, index) => (
+                <Creator key={index}>{item?.name}</Creator>
               ))}
             </Creators>
             <MoreInfo>
-              {comics.urls.map((url) => (
-                <>
-                  <Links href={url.url} target="_blank">
-                    {url.type}
-                  </Links>
-                </>
+              {comics.urls.map((url, index) => (
+                <Links href={url.url} target="_blank" key={index}>
+                  {url.type}
+                </Links>
               ))}
             </MoreInfo>
           </Info>

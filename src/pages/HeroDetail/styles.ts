@@ -138,3 +138,6 @@ export const WrapperDetailsHero = styled.div`
   height: 35rem;
   gap: 1.25rem;
 `;
+
+export const Comic = styled.div``;
+export const Event = styled.div``;

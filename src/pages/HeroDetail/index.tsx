@@ -12,6 +12,8 @@ import {
   WrapperDetailsHero,
   HeroDetailsContainer,
   GoBack,
+  Comic,
+  Event,
 } from "./styles";
 import { useParams, useNavigate } from "react-router-dom";
 import { getHero } from "../../services/api";
@@ -101,8 +103,8 @@ export const HeroDetail = () => {
             <Name>{hero.name}</Name>
             <Name>{hero.comics.available}</Name>
             <MoreInfo>
-              {hero.urls.map((url) => (
-                <Links href={url.url} target="_blank">
+              {hero.urls.map((url, index) => (
+                <Links href={url.url} target="_blank" key={index}>
                   {url.type}
                 </Links>
               ))}
@@ -111,14 +113,14 @@ export const HeroDetail = () => {
           <WrapperDetailsHero>
             <Events>
               {`Eventos:`}
-              {hero.events.items.map((item) => (
-                <div>{item?.name}</div>
+              {hero.events.items.map((item, index) => (
+                <Event key={index}>{item?.name}</Event>
               ))}
             </Events>
             <Comics>
               {`Quadrinhos:`}
-              {hero.comics.items.map((item) => (
-                <div>{item?.name}</div>
+              {hero.comics.items.map((item, index) => (
+                <Comic key={index}>{item?.name}</Comic>
               ))}
             </Comics>
           </WrapperDetailsHero>

@@ -45,7 +45,11 @@ Depois disso, acesse a pasta do repositório pelo terminal:
 instalando bibliotecas e dependências do projeto:
 
 ```bash
-  npm install ou yarn install
+  npm install
+```
+ou
+```bash
+  yarn install
 ```
 
 ## Rodando projeto
@@ -53,7 +57,11 @@ instalando bibliotecas e dependências do projeto:
 Após clonar o repositório e instalar as dependências necessárias, para rodar o projeto basta usar o seguinte comando:
 
 ```bash
-   yarn dev ou npm run dev
+   yarn dev
+```
+ou
+```bash
+   npm run dev
 ```
 
 ## Tecnologias e bibliotecas utilizadas

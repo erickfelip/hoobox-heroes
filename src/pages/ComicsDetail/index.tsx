@@ -89,7 +89,7 @@ export const ComicsDetail = () => {
           <WrapperDetailsHero>
             <Events>
               {`Descrição: `}
-              {comics.description
+              {comics.description === ""
                 ? "Quadrinho não possui descrição"
                 : comics.description}
             </Events>

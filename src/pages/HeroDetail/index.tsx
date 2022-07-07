@@ -17,7 +17,7 @@ import {
 } from "./styles";
 import { useParams, useNavigate } from "react-router-dom";
 import { getHero } from "../../services/api";
-import { HeroesData } from "../Home";
+import { emptyHeroesData, HeroesData } from "../../types";
 import { Rating } from "react-simple-star-rating";
 import { BiArrowBack } from "react-icons/bi";
 import RingLoader from "react-spinners/ClipLoader";
@@ -31,37 +31,7 @@ export const HeroDetail = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [ratingValue, setRatingValue] = useState(0);
-
-  const [hero, setHero] = useState<HeroesData>({
-    id: "",
-    name: "",
-    description: "",
-    thumbnail: {
-      extension: "",
-      path: "",
-    },
-    comics: {
-      available: "",
-      items: [
-        {
-          name: "",
-        },
-      ],
-    },
-    events: {
-      items: [
-        {
-          name: "",
-        },
-      ],
-    },
-    urls: [
-      {
-        type: "",
-        url: "",
-      },
-    ],
-  });
+  const [hero, setHero] = useState<HeroesData>(emptyHeroesData);
 
   useEffect(() => {
     const rating = localStorage.getItem(id);
@@ -101,7 +71,11 @@ export const HeroDetail = () => {
               <Rating ratingValue={ratingValue} onClick={handleRating} />
             </RatingStatus>
             <Name>{hero.name}</Name>
-            <Name>{hero.comics.available}</Name>
+            <Name>
+              {`Disponível em: `}
+              {hero.comics.available}
+              {` quadrinhos`}
+            </Name>
             <MoreInfo>
               {hero.urls.map((url, index) => (
                 <Links href={url.url} target="_blank" key={index}>

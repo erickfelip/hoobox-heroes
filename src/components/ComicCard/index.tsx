@@ -1,5 +1,5 @@
 import React from "react";
-import { ComicsData } from "../../pages/Comics";
+import { ComicsData } from "../../types";
 import { Card, Photo, CardContent, Name, Description } from "./styles";
 import { Link } from "react-router-dom";
 

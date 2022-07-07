@@ -14,37 +14,7 @@ import { SearchInput } from "../../components/SearchInput";
 import { CardHero } from "../../components/Card";
 import { useNavigate } from "react-router-dom";
 import RotateLoader from "react-spinners/ClipLoader";
-
-export type HeroesData = {
-  id: string;
-  name: string;
-  description: string;
-  thumbnail: {
-    extension: string;
-    path: string;
-  };
-  comics: {
-    available: string;
-    items: [
-      {
-        name: string;
-      }
-    ];
-  };
-  events: {
-    items: [
-      {
-        name: string;
-      }
-    ];
-  };
-  urls: [
-    {
-      type: string;
-      url: string;
-    }
-  ];
-};
+import { HeroesData } from "../../types";
 
 export const Home = () => {
   const [heroes, setHeroes] = useState<HeroesData[]>([]);

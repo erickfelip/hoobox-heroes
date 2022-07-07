@@ -12,13 +12,14 @@ import {
   WrapperDetailsHero,
   Events,
   Comics,
+  Comic,
   Creators,
   Creator,
 } from "./styles";
 import { BiArrowBack } from "react-icons/bi";
 import { useNavigate, useParams } from "react-router-dom";
 import { Rating } from "react-simple-star-rating";
-import { ComicsData } from "../Comics";
+import { ComicsData, emptyComicsData } from "../../types";
 import { getComics } from "../../services/api";
 import RingLoader from "react-spinners/ClipLoader";
 
@@ -31,41 +32,7 @@ export const ComicsDetail = () => {
   const navigate = useNavigate();
   const [ratingValue, setRatingValue] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [comics, setComics] = useState<ComicsData>({
-    id: "string",
-    title: "",
-    description: "",
-    thumbnail: {
-      extension: "",
-      path: "",
-    },
-    creators: {
-      avaliable: "",
-      collectionURI: "",
-      items: [
-        {
-          name: "",
-          role: "",
-        },
-      ],
-    },
-    urls: [
-      {
-        type: "",
-        url: "",
-      },
-    ],
-    series: {
-      name: "",
-    },
-    characters: {
-      items: [
-        {
-          name: "",
-        },
-      ],
-    },
-  });
+  const [comics, setComics] = useState<ComicsData>(emptyComicsData);
 
   useEffect(() => {
     const rating = localStorage.getItem(id);
@@ -122,7 +89,7 @@ export const ComicsDetail = () => {
           <WrapperDetailsHero>
             <Events>
               {`Descrição: `}
-              {comics.description === "" || null
+              {comics.description
                 ? "Quadrinho não possui descrição"
                 : comics.description}
             </Events>
@@ -133,7 +100,7 @@ export const ComicsDetail = () => {
             <Comics>
               {`Cross-over de personagens: `}
               {comics.characters.items.map((item, index) => (
-                <div key={index}>{item?.name}</div>
+                <Comic key={index}>{item?.name}</Comic>
               ))}
             </Comics>
           </WrapperDetailsHero>

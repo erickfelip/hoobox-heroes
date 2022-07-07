@@ -21,7 +21,7 @@ export const ComicsDetailContainer = styled.div`
   justify-content: center;
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 85%;
+  width: 85rem;
   border-radius: 20px;
   padding: 10px;
   @media screen and (max-width: 1023px) {
@@ -32,7 +32,8 @@ export const ComicsDetailContainer = styled.div`
 
 export const GoBack = styled.div`
   color: black;
-  height: 557px;
+  height: 37.5rem;
+  padding: 10px;
   cursor: pointer;
 
   @media screen and (max-width: 1023px) {
@@ -43,8 +44,8 @@ export const GoBack = styled.div`
 `;
 
 export const Photo = styled.img.attrs({
-  width: 375,
-  height: 367,
+  width: 355,
+  height: 355,
 })`
   max-width: 100%;
   border-radius: 10px;
@@ -52,7 +53,6 @@ export const Photo = styled.img.attrs({
 
 export const Info = styled.div`
   padding: 20px;
-  font-size: 16px;
   width: 100%;
 
   @media screen and (max-width: 1023px) {
@@ -136,8 +136,12 @@ export const WrapperDetailsHero = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 35rem;
+  height: 32.5rem;
   gap: 1.25rem;
+  padding-right: 2rem;
+  @media screen and (max-width: 1023px) {
+    padding: 20px;
+  }
 `;
 
 export const Creators = styled.div`
@@ -155,3 +159,4 @@ export const Creators = styled.div`
 `;
 
 export const Creator = styled.div``;
+export const Comic = styled.div``;

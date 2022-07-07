@@ -1,14 +1,13 @@
 import React from "react";
-import { HeroesData } from "../../pages/Home";
+import { HeroesData } from "../../types";
 import { Card, Photo, CardContent, Name, Description } from "./styles";
-import { useNavigate, Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export type CardHeroProps = {
   character: HeroesData;
 };
 
 export const CardHero = (props: CardHeroProps) => {
-  const params = useParams();
   const { character } = props;
   return (
     <Card key={character.id}>

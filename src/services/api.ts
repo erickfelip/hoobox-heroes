@@ -24,7 +24,6 @@ export async function fetchHeroes(searchField: string) {
 
   try {
     const response = await api.get("/characters", params);
-    console.log("Resposta da API", response.data.data.results);
     return response.data.data.results;
   } catch (error) {
     console.log(error);
@@ -34,7 +33,6 @@ export async function fetchHeroes(searchField: string) {
 export async function getHero(id: string) {
   try {
     const response = await api.get(`/characters/${id}`);
-    console.log("Resposta da API", response.data.data.results);
     return response.data.data.results;
   } catch (error) {
     console.log(error);
@@ -44,7 +42,6 @@ export async function getHero(id: string) {
 export async function getComics(id: string) {
   try {
     const response = await api.get(`/comics/${id}`);
-    console.log("Resposta da Comics", response.data.data.results);
     return response.data.data.results;
   } catch (error) {
     console.log(error);
@@ -62,7 +59,6 @@ export async function fetchComics(searchField: string) {
 
   try {
     const response = await api.get("/comics", params);
-    console.log("Quadrinhos", response.data.data.results);
     return response.data.data.results;
   } catch (error) {
     console.log(error);

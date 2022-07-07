@@ -14,42 +14,7 @@ import { ComicCard } from "../../components/ComicCard";
 import { api, fetchComics } from "../../services/api";
 import { useNavigate } from "react-router-dom";
 import RotateLoader from "react-spinners/ClipLoader";
-
-export type ComicsData = {
-  id: string;
-  title: string;
-  description: string;
-  thumbnail: {
-    extension: string;
-    path: string;
-  };
-  creators: {
-    avaliable: string;
-    collectionURI: string;
-    items: [
-      {
-        name: string;
-        role: string;
-      }
-    ];
-  };
-  urls: [
-    {
-      type: string;
-      url: string;
-    }
-  ];
-  series: {
-    name: string;
-  };
-  characters: {
-    items: [
-      {
-        name: string;
-      }
-    ];
-  };
-};
+import { ComicsData } from "../../types";
 
 export const Comics = () => {
   const [comics, setComics] = useState<ComicsData[]>([]);

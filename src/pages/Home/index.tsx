@@ -15,6 +15,7 @@ import { CardHero } from "../../components/Card";
 import { useNavigate } from "react-router-dom";
 import RotateLoader from "react-spinners/ClipLoader";
 import { HeroesData } from "../../types";
+import { debounce } from "lodash";
 
 export const Home = () => {
   const [heroes, setHeroes] = useState<HeroesData[]>([]);
@@ -33,10 +34,10 @@ export const Home = () => {
     setLoading(false);
   };
 
-  const handleSearch = (string: { target: { value: string } }) => {
-    const { value } = string.target;
+  const handleSearch = debounce((e: { target: { value: string } }) => {
+    const { value } = e.target;
     setSearchField(value);
-  };
+  }, 350);
 
   const handleMoreHeroes = useCallback(async () => {
     try {

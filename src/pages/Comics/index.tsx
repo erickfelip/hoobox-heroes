@@ -15,6 +15,7 @@ import { api, fetchComics } from "../../services/api";
 import { useNavigate } from "react-router-dom";
 import RotateLoader from "react-spinners/ClipLoader";
 import { ComicsData } from "../../types";
+import { debounce } from "lodash";
 
 export const Comics = () => {
   const [comics, setComics] = useState<ComicsData[]>([]);
@@ -33,10 +34,10 @@ export const Comics = () => {
     setLoading(false);
   };
 
-  const handleSearch = (string: { target: { value: string } }) => {
+  const handleSearch = debounce((string: { target: { value: string } }) => {
     const { value } = string.target;
     setSearchField(value);
-  };
+  }, 350);
 
   const handleMoreComics = useCallback(async () => {
     try {

@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import RotateLoader from "react-spinners/ClipLoader";
 import { HeroesData } from "../../types";
 import { debounce } from "lodash";
+import { useQuery } from "@tanstack/react-query";
 
 export const Home = () => {
   const [heroes, setHeroes] = useState<HeroesData[]>([]);
@@ -23,7 +24,12 @@ export const Home = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  const { data, isLoading } = useQuery(["heroes"], () =>
+    fetchHeroes(searchField)
+  );
+  console.log("teste", data);
+
+  /*   useEffect(() => {
     dataHeroes();
   }, [searchField]);
 
@@ -34,11 +40,21 @@ export const Home = () => {
     setLoading(false);
   };
 
+  console.log("@@", heroes); */
+
+  /*   if (isLoading || !data) {
+    return (
+      <WrapperLoading>
+        <RotateLoader size={100} />
+      </WrapperLoading>
+    );
+  } */
+
   const handleSearch = debounce((e: { target: { value: string } }) => {
     const { value } = e.target;
     setSearchField(value);
   }, 350);
-
+  /* 
   const handleMoreHeroes = useCallback(async () => {
     try {
       const offset = heroes.length;
@@ -49,7 +65,7 @@ export const Home = () => {
       });
       setHeroes([...heroes, ...response.data.data.results]);
     } catch (error) {}
-  }, [heroes]);
+  }, [heroes]); */
 
   const handleComics = () => {
     setLoading(true);
@@ -69,16 +85,17 @@ export const Home = () => {
           <Button text="Comics" onClick={handleComics} />
         </ButtonWrapperMenu>
       </Menu>
-      {loading ? (
+      <>{`teste ${data}`}</>
+      {isLoading ? (
         <WrapperLoading>
           <RotateLoader size={100} />
         </WrapperLoading>
       ) : (
         <>
           <Wrapper>
-            {heroes && heroes.length > 0 ? (
+            {data && data.length > 0 ? (
               <MapHeroes>
-                {heroes.map((character) => {
+                {data.map((character: HeroesData) => {
                   return <CardHero character={character} key={character.id} />;
                 })}
               </MapHeroes>
@@ -92,7 +109,7 @@ export const Home = () => {
           </Wrapper>
           {!searchField && (
             <ButtonWrapper>
-              <Button text="More Heroes" onClick={handleMoreHeroes} />
+              {/*  <Button text="More Heroes" onClick={handleMoreHeroes} /> */}
             </ButtonWrapper>
           )}
         </>
